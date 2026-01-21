@@ -7,7 +7,7 @@ class EndpointTests {
     
     @Test
     void testEndpointConstruction() {
-        Endpoint endpoint = new Endpoint("/api/test");
+        Endpoint endpoint = new Endpoint("/api/test", HttpMethod.GET);
         endpoint.setMethod(HttpMethod.GET);
 
         assertNotNull(endpoint.getId(), "ID should be automatically generated");
@@ -27,13 +27,13 @@ class EndpointTests {
     @Test
     void endpointConstructorShouldThrowIfPathIsNull() {
         assertThrows(NullPointerException.class, () -> {
-            new Endpoint(null);
+            new Endpoint(null, HttpMethod.GET);
         });
     }
 
     @Test
     void endpointShouldAddNewVariant() {
-        Endpoint endpoint = new Endpoint("/api/test");
+        Endpoint endpoint = new Endpoint("/api/test", HttpMethod.GET);
         EndpointVariant variant1 = new EndpointVariant("success", new ResponseDef(200)); 
         EndpointVariant variant2 = new EndpointVariant("error", new ResponseDef(500)); 
 
@@ -48,7 +48,7 @@ class EndpointTests {
 
     @Test
     void endpointShouldNotAllowDuplicateVariants() {
-        Endpoint endpoint = new Endpoint("/api/test");
+        Endpoint endpoint = new Endpoint("/api/test", HttpMethod.GET);
         EndpointVariant variant = new EndpointVariant("success", new ResponseDef(200));
 
         endpoint.addVariant(variant);

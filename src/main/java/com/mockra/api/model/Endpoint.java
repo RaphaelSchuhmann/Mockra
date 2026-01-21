@@ -24,6 +24,10 @@ public class Endpoint {
 
     public String getPath() { return path; }
 
-    public void addVariant(EndpointVariant response) { if (!responses.contains(response)) this.responses.add(response); }
+    public void addVariant(EndpointVariant variant) { 
+        boolean exists = responses.stream().anyMatch(v -> v.getVariant().equals(variant.getVariant()));
+
+        if (!exists) responses.add(variant);
+    }
     public List<EndpointVariant> getVariants() { return Collections.unmodifiableList(responses); }
 }

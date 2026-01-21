@@ -2,7 +2,7 @@ package com.mockra.api.model;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+import java.util.Collections;
 
 import static com.mockra.api.errorHandling.ErrorHandler.displayError;
 import com.mockra.api.errorHandling.ValidationExceptions.InvalidDelayException;
@@ -20,7 +20,7 @@ public class ResponseDef {
     public int getStatus() { return status; }
 
     public void addHeader(String header, String value) { headers.put(header, value); }
-    public Map<String, String> getHeaders() { return headers; }
+    public Map<String, String> getHeaders() { return Collections.unmodifiableMap(headers); }
 
     public void setBody(Object body) { this.body = body; }
     public Object getBody() { return body; }
