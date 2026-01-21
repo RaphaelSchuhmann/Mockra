@@ -1,6 +1,6 @@
 # Mockra
 
-Mockra is a **config-driven local mock API server** designed to help developers test frontend and backend applications without relying on real APIs. Define your endpoints, responses, and behaviors in YAML — spin it up, point your client, and start testing.
+Mockra is a **config-driven mock API server** designed to help developers test frontend and backend applications without relying on real APIs. Define your endpoints, responses, and behaviors in YAML — spin it up, point your client, and start testing.
 
 ---
 
