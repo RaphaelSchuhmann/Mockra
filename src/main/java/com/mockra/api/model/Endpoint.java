@@ -22,6 +22,6 @@ public class Endpoint {
 
     public String getPath() { return path; }
 
-    public void addVariant(EndpointVariant response) { this.responses.add(response); }
+    public void addVariant(EndpointVariant response) { if (!responses.contains(response)) this.responses.add(response); }
     public List<EndpointVariant> getVariants() { return responses; }
 }
