@@ -8,6 +8,8 @@ import com.mockra.api.model.HttpMethod;
 import com.mockra.api.errorHandling.ConfigExceptions.*;
 
 import lombok.Data;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +21,9 @@ public class MockraConfig {
 
     @Data
     public static class ServerConfig {
+        @NotBlank(message = "Port is required")
+        @Min(1)
+        @Max(75535)
         public int port;
     }
 
