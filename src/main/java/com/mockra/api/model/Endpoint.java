@@ -1,6 +1,7 @@
 package com.mockra.api.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -24,5 +25,5 @@ public class Endpoint {
     public String getPath() { return path; }
 
     public void addVariant(EndpointVariant response) { if (!responses.contains(response)) this.responses.add(response); }
-    public List<EndpointVariant> getVariants() { return responses; }
+    public List<EndpointVariant> getVariants() { return Collections.unmodifiableList(responses); }
 }
