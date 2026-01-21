@@ -4,8 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Collections;
 
-import static com.mockra.api.errorHandling.ErrorHandler.displayError;
+import static com.mockra.api.errorHandling.ErrorHandler.displayMessage;
 import com.mockra.api.errorHandling.ValidationExceptions.InvalidDelayException;
+import com.mockra.api.errorHandling.ErrorType;
 
 public class ResponseDef {
     private final int status; // Required
@@ -29,12 +30,12 @@ public class ResponseDef {
         if (delay >= 0) {
             this.delayMs = delay;
         } else {
-            InvalidDelayException ex = new InvalidDelayException("Invalid Delay: " + delay + "is not allowed!");
+            InvalidDelayException ex = new InvalidDelayException("Invalid Delay: " + delay + " is not allowed!");
 
             if (throwOnInvalid) {
                 throw ex;
             } else {
-                displayError(ex.getMessage());
+                displayMessage(ex.getMessage(), ErrorType.WARNING);
             }
         }
     }
