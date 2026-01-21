@@ -11,8 +11,9 @@ public class Endpoint {
     private final String path;
     private List<EndpointVariant> responses = new ArrayList<>();
 
-    public Endpoint(String path) {
+    public Endpoint(String path, HttpMethod method) {
         this.path = Objects.requireNonNull(path);
+        this.method = Objects.requireNonNull(method);
     }
 
     public String getId() { return id; }
