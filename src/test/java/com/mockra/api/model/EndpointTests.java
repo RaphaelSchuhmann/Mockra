@@ -49,10 +49,11 @@ class EndpointTests {
     @Test
     void endpointShouldNotAllowDuplicateVariants() {
         Endpoint endpoint = new Endpoint("/api/test", HttpMethod.GET);
-        EndpointVariant variant = new EndpointVariant("success", new ResponseDef(200));
+        EndpointVariant variant1 = new EndpointVariant("success", new ResponseDef(200));
+        EndpointVariant variant2 = new EndpointVariant("success", new ResponseDef(200));
 
-        endpoint.addVariant(variant);
-        endpoint.addVariant(variant);
+        endpoint.addVariant(variant1);
+        endpoint.addVariant(variant2);
 
         assertEquals(1, endpoint.getVariants().size(), "Variants list should contain the variant once");
     }
