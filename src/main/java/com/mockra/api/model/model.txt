@@ -1,6 +1,0 @@
-Responsibility: Pure data structures
-Rules:
-- No Spring annotations
-- No HTTP knowledge
-- No logic beyond validation
-Think of this as your domain layer.
