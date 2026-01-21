@@ -1,0 +1,5 @@
+Responsibility: Small helpers
+Examples:
+- JSON serialization
+- header normalization
+- time utilities

@@ -1,0 +1,5 @@
+Responsibility: Decision logic
+This is where:
+- X-Mockra-Variant is read
+- variants are matched
+- errors are generated
