@@ -7,7 +7,6 @@ import java.util.List;
 import com.mockra.api.model.HttpMethod;
 import com.mockra.api.config.MockraConfig.EndpointConfig.ValidRequestBody;
 import com.mockra.api.config.MockraConfig.EndpointConfig.NoHotReloadPath;
-import com.mockra.api.errorHandling.ConfigExceptions.*;
 
 import lombok.Data;
 import jakarta.validation.Valid;
@@ -85,7 +84,8 @@ public class MockraConfig {
                     return true;
                 }
 
-                if (endpoint.getPath().equals("/admin/config")) {
+                String normalizedPath = endpoint.getPath().toLowerCase();
+                if (normalizedPath.equals("/admin/config") || normalizedPath.startsWith("/admin/config")) {
                     context.disableDefaultConstraintViolation();
                     context.buildConstraintViolationWithTemplate("Endpoint path '" + endpoint.getPath() + "' is reserved and cannot be used")
                            .addPropertyNode("path")

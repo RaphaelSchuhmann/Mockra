@@ -14,7 +14,7 @@ public class ConfigServiceTests {
     @Test
     void loadingEmptyConfigShouldReturnNull() {
         ConfigService service = new ConfigService(Path.of("C:/")); // Path is irrelevant
-        
+
         assertEquals(null, service.getConfig());
     }
 
@@ -87,6 +87,15 @@ public class ConfigServiceTests {
     }
 
     @Test
+    void invalidatesPathThatIsInGeneralReservedSpace() throws Exception {
+        ConfigService service = new ConfigService(configPath("invalid-start-hot-reload-path.yaml"));
+
+        assertThrows(IllegalConfigException.class, () -> {
+            service.load(true);
+        });
+    }
+
+    @Test
     void invalidatesRequestBodyForGET() throws Exception {
         ConfigService service = new ConfigService(configPath("invalid-body-get.yaml"));
 
@@ -106,9 +115,7 @@ public class ConfigServiceTests {
 
     private Path configPath(String name) throws Exception {
         return Path.of(
-            Objects.requireNonNull(
-                getClass().getClassLoader().getResource("configs/" + name)
-            ).toURI()
-        );
+                Objects.requireNonNull(
+                        getClass().getClassLoader().getResource("configs/" + name)).toURI());
     }
 }
