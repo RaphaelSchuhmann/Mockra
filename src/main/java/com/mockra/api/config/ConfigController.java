@@ -24,7 +24,7 @@ public class ConfigController {
             displayMessage("Config reloaded successfully!", ErrorType.INFO);
             return "Config reloaded successfully!";
         } catch (Exception e) {
-            displayMessage(e.getMessage(), ErrorType.FATAL);
+            displayMessage(e.getMessage(), ErrorType.ERROR);
             return "Config reload failed!";
         }
     }

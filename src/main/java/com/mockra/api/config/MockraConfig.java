@@ -43,7 +43,7 @@ public class MockraConfig {
     public static class ServerConfig {
         @NotNull(message = "Port is required")
         @Min(1)
-        @Max(75535)
+        @Max(65535)
         public Integer port;
     }
 
