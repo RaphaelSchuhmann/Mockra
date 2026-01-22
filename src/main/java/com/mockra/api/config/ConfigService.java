@@ -8,23 +8,39 @@ import java.nio.file.Path;
 import java.util.concurrent.atomic.AtomicReference;
 
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.parser.ParserException;
 
 import com.mockra.api.errorHandling.ConfigExceptions.IllegalConfigException;
 
 @Service
 public class ConfigService {
     private final AtomicReference<MockraConfig> activeConfig = new AtomicReference<>();
+    private final Path configPath;
+
+    public ConfigService(Path configPath) {
+        this.configPath = configPath;
+    }
 
     public MockraConfig getConfig() { return activeConfig.get(); }
 
-    public void load() {
-        Path configPath = Path.of(System.getProperty("user.dir"), "config.yaml");
+    public void load(boolean throwOnInvalid) throws IOException, IllegalConfigException {
         try {
             MockraConfig newConfig = ConfigLoader.loadAndValidate(configPath);
             activeConfig.getAndSet(newConfig);
+        } catch (IOException e) {
+            if (throwOnInvalid) {
+                throw e;
+            } else {
+                displayMessage(
+                        "Error reading config:\n\tThere was an error while loading the config.yaml.\n\tPlease ensure that the config exists and is named config.yaml.",
+                        ErrorType.FATAL);
+            }
         } catch (Exception e) {
-            // Hard exit on any exception thrown during config loading and validation
-            displayMessage(e.getMessage(), ErrorType.FATAL);
-        }
+            if (throwOnInvalid) {
+                throw e;
+            } else {
+                displayMessage(e.getMessage(), ErrorType.FATAL);
+            }
+        } 
     }
 }

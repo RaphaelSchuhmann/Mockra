@@ -1,14 +1,17 @@
 package com.mockra.api.config;
 
+import java.nio.file.Path;
+
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class ConfigStartup {
+public class ConfigBeans {
 
     @Bean
-    ApplicationRunner loadConfigOnStartup(ConfigService configService) {
-        return args -> configService.load(false);
+    ConfigService configService() {
+        Path path = Path.of(System.getProperty("user.dir"), "config.yaml");
+        return new ConfigService(path);
     }
 }

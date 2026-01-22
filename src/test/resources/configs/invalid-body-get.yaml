@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+endpoints:
+  - id: 
+    method: GET
+    path: /api/get
+    request:
+      - username
+      - password
+    responses:
+      - variant: success
+        status: 200
+        body:
+          token: "abc123"
