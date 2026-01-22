@@ -2,7 +2,7 @@ server:
   port: 8080
 
 endpoints:
-  - id: 
+  - id: get
     method: GET
     path: /api/get
     request:
