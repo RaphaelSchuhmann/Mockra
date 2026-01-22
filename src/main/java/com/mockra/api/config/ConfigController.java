@@ -16,11 +16,11 @@ public class ConfigController {
         this.configService = configService;
     }
 
-    @GetMapping("/admin/config")
+    @GetMapping("/admin/config/reload")
     public String hotReloadConfig() {
         try {
             configService.load(false);
-            
+
             displayMessage("Config reloaded successfully!", ErrorType.INFO);
             return "Config reloaded successfully!";
         } catch (Exception e) {
