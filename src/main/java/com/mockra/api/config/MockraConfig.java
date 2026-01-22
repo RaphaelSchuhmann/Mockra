@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.List;
 import com.mockra.api.model.HttpMethod;
 import com.mockra.api.config.MockraConfig.EndpointConfig.ValidRequestBody;
+import com.mockra.api.config.MockraConfig.EndpointConfig.NoHotReloadPath;
 import com.mockra.api.errorHandling.ConfigExceptions.*;
 
 import lombok.Data;
@@ -47,6 +48,7 @@ public class MockraConfig {
     }
 
     @Data
+    @NoHotReloadPath
     @ValidRequestBody
     public static class EndpointConfig {
         @NotBlank(message = "Endpoint ID is required")
@@ -63,6 +65,37 @@ public class MockraConfig {
         @NotEmpty(message = "Each endpoint must have at least one variant / response")
         @Valid
         public List<VariantConfig> responses = new ArrayList<>();
+
+        @Target({ ElementType.TYPE })
+        @Retention(RetentionPolicy.RUNTIME)
+        @Constraint(validatedBy = NoHotReloadPathValidator.class)
+        @Documented
+        public @interface NoHotReloadPath {
+            String message() default "Endpoint path is reserved for internal use";
+
+            Class<?>[] groups() default {};
+
+            Class<? extends Payload>[] payload() default {};
+        }
+
+        public static class NoHotReloadPathValidator implements ConstraintValidator<NoHotReloadPath, MockraConfig.EndpointConfig> {
+            @Override
+            public boolean isValid(MockraConfig.EndpointConfig endpoint, ConstraintValidatorContext context) {
+                if (endpoint == null || endpoint.getPath() == null) {
+                    return true;
+                }
+
+                if (endpoint.getPath().equals("/admin/config")) {
+                    context.disableDefaultConstraintViolation();
+                    context.buildConstraintViolationWithTemplate("Endpoint path '" + endpoint.getPath() + "' is reserved and cannot be used")
+                           .addPropertyNode("path")
+                           .addConstraintViolation();
+                    return false;
+                }
+
+                return true;
+            }
+        }
 
         @Target(ElementType.TYPE)
         @Retention(RetentionPolicy.RUNTIME)
@@ -99,7 +132,6 @@ public class MockraConfig {
                 return valid;
             }
         }
-
     }
 
     @Data

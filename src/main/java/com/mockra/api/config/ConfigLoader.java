@@ -1,8 +1,9 @@
 package com.mockra.api.config;
 
 import static com.mockra.api.errorHandling.ErrorHandler.displayMessage;
-import com.mockra.api.errorHandling.ConfigExceptions;
 import com.mockra.api.errorHandling.ErrorType;
+import com.mockra.api.config.MockraConfig.EndpointConfig;
+import com.mockra.api.errorHandling.ConfigExceptions;
 import com.mockra.api.errorHandling.ConfigExceptions.IllegalConfigException;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.yaml.snakeyaml.LoaderOptions;
@@ -22,7 +24,7 @@ import jakarta.validation.Validator;
 import jakarta.validation.ConstraintViolation;
 
 public class ConfigLoader {
-    public static MockraConfig loadAndValidate() throws IOException, IllegalConfigException {
+    public static MockraConfig loadAndValidate(Path path) throws IOException, IllegalConfigException {
         LoaderOptions options = new LoaderOptions();
         options.setAllowDuplicateKeys(false);
         options.setMaxAliasesForCollections(50);
@@ -30,12 +32,12 @@ public class ConfigLoader {
 
         Yaml yaml = new Yaml(new Constructor(MockraConfig.class, options));
 
-        try (InputStream inputStream = Files.newInputStream(Path.of("C:/test/config.yaml"))) {
+        try (InputStream inputStream = Files.newInputStream(path)) {
             MockraConfig config = yaml.load(inputStream);
 
             validateConfig(config);
 
-            displayMessage("Config validated", ErrorType.INFO);
+            displayMessage("Config loaded successfully", ErrorType.INFO);
 
             return config;
         }
@@ -50,9 +52,21 @@ public class ConfigLoader {
         if (!violations.isEmpty()) {
             StringBuilder sb = new StringBuilder("Config validation failed:\n");
             for (ConstraintViolation<MockraConfig> v : violations) {
-                sb.append("- ").append(v.getPropertyPath()).append(": ").append(v.getMessage()).append("\n");
+                sb.append("\t- ").append(v.getPropertyPath()).append(": ").append(v.getMessage()).append("\n");
             }
             throw new IllegalConfigException(sb.toString());
+        }
+
+
+        // Check for duplicate ids and paths
+        List<String> ids = new ArrayList<>();
+        List<String> paths = new ArrayList<>();
+
+        for (EndpointConfig endpoint : config.getEndpoints()) {
+            if (ids.contains(endpoint.id)) throw new IllegalConfigException("Config validation failed:\n\tDuplicate endpoint ids were found: " + endpoint.id);
+            if (paths.contains(endpoint.path)) throw new IllegalConfigException("Config validation failed:\n\tDuplicate endpoint paths were found: " + endpoint.path);
+            ids.add(endpoint.id);
+            paths.add(endpoint.path);
         }
     }
 }
