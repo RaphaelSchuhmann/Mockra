@@ -7,10 +7,10 @@ class EndpointTests {
     
     @Test
     void testEndpointConstruction() {
-        Endpoint endpoint = new Endpoint("/api/test", HttpMethod.GET);
+        Endpoint endpoint = new Endpoint("test", "/api/test", HttpMethod.GET);
         endpoint.setMethod(HttpMethod.GET);
 
-        assertNotNull(endpoint.getId(), "ID should be automatically generated");
+        assertNotNull(endpoint.getId(), "ID should be 'test'");
         assertEquals(HttpMethod.GET, endpoint.getMethod(), "Method should be set correctly");
         assertEquals("/api/test", endpoint.getPath(), "Path should be stored correctly");
 
@@ -25,15 +25,27 @@ class EndpointTests {
     }
 
     @Test
-    void endpointConstructorShouldThrowIfPathIsNull() {
+    void endpointConstructorShouldThrowIfNullIsPassed() {
         assertThrows(NullPointerException.class, () -> {
-            new Endpoint(null, HttpMethod.GET);
+            new Endpoint("test", null, HttpMethod.GET);
+        });
+
+        assertThrows(NullPointerException.class, () -> {
+            new Endpoint(null, "/api/test", HttpMethod.GET);
+        });
+
+        assertThrows(NullPointerException.class, () -> {
+            new Endpoint("test", "/api/test", null);
+        });
+
+        assertThrows(NullPointerException.class, () -> {
+            new Endpoint(null, null, null);
         });
     }
 
     @Test
     void endpointShouldAddNewVariant() {
-        Endpoint endpoint = new Endpoint("/api/test", HttpMethod.GET);
+        Endpoint endpoint = new Endpoint("test", "/api/test", HttpMethod.GET);
         EndpointVariant variant1 = new EndpointVariant("success", new ResponseDef(200)); 
         EndpointVariant variant2 = new EndpointVariant("error", new ResponseDef(500)); 
 
@@ -48,7 +60,7 @@ class EndpointTests {
 
     @Test
     void endpointShouldNotAllowDuplicateVariants() {
-        Endpoint endpoint = new Endpoint("/api/test", HttpMethod.GET);
+        Endpoint endpoint = new Endpoint("test", "/api/test", HttpMethod.GET);
         EndpointVariant variant1 = new EndpointVariant("success", new ResponseDef(200));
         EndpointVariant variant2 = new EndpointVariant("success", new ResponseDef(200));
 

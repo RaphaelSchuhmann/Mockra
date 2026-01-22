@@ -1,0 +1,12 @@
+server:
+  port: 8080
+
+endpoints:
+  - id: get
+    method: GET
+    path: /admin/config
+    responses:
+      - variant: success
+        status: 200
+        body:
+          token: "abc123"

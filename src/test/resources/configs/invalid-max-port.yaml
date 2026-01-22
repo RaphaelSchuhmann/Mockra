@@ -1,0 +1,12 @@
+server:
+  port: 75537
+
+endpoints:
+  - id: get
+    method: GET
+    path: /api/get
+    responses:
+      - variant: success
+        status: 200
+        body:
+          token: "abc123"

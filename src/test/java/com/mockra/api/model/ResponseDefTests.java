@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Map;
 
-public class TestResponseDef {
+public class ResponseDefTests {
     @Test
     void responseDefShouldSetAndGetDataCorrectly() throws InvalidDelayException {
         ResponseDef response = new ResponseDef(200);
