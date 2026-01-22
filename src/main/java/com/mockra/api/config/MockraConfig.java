@@ -52,7 +52,7 @@ public class MockraConfig {
     @ValidRequestBody
     public static class EndpointConfig {
         @NotBlank(message = "Endpoint ID is required")
-        public String id; // If not set for some reason doesn't throw an error
+        public String id;
 
         @NotNull(message = "HTTP Method is required")
         public HttpMethod method;

@@ -1,5 +1,7 @@
 package com.mockra.api.config;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,15 +18,15 @@ public class ConfigController {
     }
 
     @PostMapping("/admin/config/reload")
-    public String hotReloadConfig() {
+    public ResponseEntity<String> hotReloadConfig() {
         try {
             configService.load(false);
 
             displayMessage("Config reloaded successfully!", ErrorType.INFO);
-            return "Config reloaded successfully!";
+            return ResponseEntity.ok("Config reloaded successfully!");
         } catch (Exception e) {
             displayMessage(e.getMessage(), ErrorType.ERROR);
-            return "Config reload failed!";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Config reload failed!");
         }
     }
 
