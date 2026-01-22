@@ -1,6 +1,0 @@
-Responsibility: Startup + YAML loading + validation
-Contains:
-- YAML parser
-- schema validation
-- fail-fast logic
-This runs before any HTTP traffic exists.
