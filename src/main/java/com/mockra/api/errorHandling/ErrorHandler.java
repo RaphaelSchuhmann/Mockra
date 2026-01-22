@@ -3,7 +3,7 @@ package com.mockra.api.errorHandling;
 public class ErrorHandler {
     public static void displayMessage(String msg, ErrorType type) {
         if (type == null) {
-            System.out.println("\u001B[34m" + "[INFO] " + "\u001B[0m" + msg);
+            System.out.println("[\u001B[1m\u001B[34mINFO\u001B[0m] " + msg);
             return;
         }
 
@@ -15,8 +15,8 @@ public class ErrorHandler {
                 System.err.println("\u001B[1m\u001B[31m[FATAL] " + msg + "\u001B[0m");
                 System.exit(1);
             }
-            case DEBUG -> System.out.println("\u001B[1m\u001B[35m" + "[DEBUG] " + "\u001B[0m" + msg);
-            default -> System.out.println("[INFO] " + msg);
+            case DEBUG -> System.out.println("[\u001B[1m\u001B[35mDEBUG\u001B[0m " + msg);
+            default -> System.out.println("[\u001B[1m\u001B[34mINFO\u001B[0m] " + msg);
         }
     }
 }

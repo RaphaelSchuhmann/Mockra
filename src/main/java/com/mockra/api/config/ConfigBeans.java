@@ -2,7 +2,6 @@ package com.mockra.api.config;
 
 import java.nio.file.Path;
 
-import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

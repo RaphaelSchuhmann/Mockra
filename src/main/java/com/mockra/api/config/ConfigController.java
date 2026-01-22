@@ -1,11 +1,10 @@
 package com.mockra.api.config;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import static com.mockra.api.errorHandling.ErrorHandler.displayMessage;
 
-import com.mockra.api.config.MockraConfig.EndpointConfig;
 import com.mockra.api.errorHandling.ErrorType;
 
 @RestController
@@ -16,7 +15,7 @@ public class ConfigController {
         this.configService = configService;
     }
 
-    @GetMapping("/admin/config/reload")
+    @PostMapping("/admin/config/reload")
     public String hotReloadConfig() {
         try {
             configService.load(false);

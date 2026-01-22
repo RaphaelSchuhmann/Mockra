@@ -10,7 +10,7 @@ class EndpointTests {
         Endpoint endpoint = new Endpoint("test", "/api/test", HttpMethod.GET);
         endpoint.setMethod(HttpMethod.GET);
 
-        assertNotNull(endpoint.getId(), "ID should be automatically generated");
+        assertNotNull(endpoint.getId(), "ID should be 'test'");
         assertEquals(HttpMethod.GET, endpoint.getMethod(), "Method should be set correctly");
         assertEquals("/api/test", endpoint.getPath(), "Path should be stored correctly");
 
