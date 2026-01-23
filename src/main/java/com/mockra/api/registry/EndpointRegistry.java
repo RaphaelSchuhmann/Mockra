@@ -48,7 +48,9 @@ public class EndpointRegistry {
             Endpoint rtEndpoint = new Endpoint(cfg.getId(), cfg.getPath(), cfg.getMethod());
             List<EndpointVariant> variants = new ArrayList<>();
 
-            rtEndpoint.setBody(cfg.getRequest());
+            if (cfg.getRequest() != null && !cfg.getRequest().isEmpty()) {
+                rtEndpoint.setBody(cfg.getRequest());
+            }
 
             for (MockraConfig.VariantConfig variantCfg : cfg.getResponses()) {
                 ResponseDef response = new ResponseDef(variantCfg.getStatus());
