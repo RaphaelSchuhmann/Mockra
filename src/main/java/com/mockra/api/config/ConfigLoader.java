@@ -44,6 +44,10 @@ public class ConfigLoader {
     }
 
     public static void validateConfig(MockraConfig config) throws IllegalConfigException {
+        if (config == null) {
+            throw new IllegalConfigException("Config is empty or invalid YAML");
+        }
+
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
 
@@ -57,14 +61,17 @@ public class ConfigLoader {
             throw new IllegalConfigException(sb.toString());
         }
 
-
         // Check for duplicate ids and paths
         List<String> ids = new ArrayList<>();
         List<String> paths = new ArrayList<>();
 
         for (EndpointConfig endpoint : config.getEndpoints()) {
-            if (ids.contains(endpoint.id)) throw new IllegalConfigException("Config validation failed:\n\tDuplicate endpoint ids were found: " + endpoint.id);
-            if (paths.contains(endpoint.path)) throw new IllegalConfigException("Config validation failed:\n\tDuplicate endpoint paths were found: " + endpoint.path);
+            if (ids.contains(endpoint.id))
+                throw new IllegalConfigException(
+                        "Config validation failed:\n\tDuplicate endpoint ids were found: " + endpoint.id);
+            if (paths.contains(endpoint.path))
+                throw new IllegalConfigException(
+                        "Config validation failed:\n\tDuplicate endpoint paths were found: " + endpoint.path);
             ids.add(endpoint.id);
             paths.add(endpoint.path);
         }

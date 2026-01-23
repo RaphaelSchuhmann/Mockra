@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+endpoints:
+  - id: get
+    method: GET
+    path: /api/get
+    responses:
+      - variant: success
+        status: 200
+        body:
+          token: "abc123"
+  - id: post
+    method: POST
+    path: /api/post
+    request:
+      username: STRING
+      id: NUMBER
+    responses:
+      - variant: success
+        status: 200
+        body:
+          token: "abc123"
+  - id: put
+    method: PUT
+    path: /api/put
+    request:
+      updatedData: STRING
+    responses:
+      - variant: success
+        status: 200
+        body:
+          token: "abc123"

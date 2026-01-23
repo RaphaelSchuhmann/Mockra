@@ -10,7 +10,6 @@ import com.mockra.api.errorHandling.ErrorType;
 
 public class ResponseDef {
     private final int status; // Required
-    private Map<String, String> headers = new HashMap<>();
     private Object body;
     private int delayMs = 0;
 
@@ -19,9 +18,6 @@ public class ResponseDef {
     }
     
     public int getStatus() { return status; }
-
-    public void addHeader(String header, String value) { headers.put(header, value); }
-    public Map<String, String> getHeaders() { return Collections.unmodifiableMap(headers); }
 
     public void setBody(Object body) { this.body = body; }
     public Object getBody() { return body; }

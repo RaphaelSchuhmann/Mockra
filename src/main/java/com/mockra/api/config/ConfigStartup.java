@@ -9,6 +9,6 @@ public class ConfigStartup {
 
     @Bean
     ApplicationRunner loadConfigOnStartup(ConfigService configService) {
-        return args -> configService.load(false);
+        return args -> configService.load(false, false);
     }
 }

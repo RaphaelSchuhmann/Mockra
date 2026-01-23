@@ -1,10 +1,10 @@
 package com.mockra.api.config;
 
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.springframework.context.ApplicationEventPublisher;
 
 import com.mockra.api.errorHandling.ConfigExceptions.IllegalConfigException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.file.Path;
 import java.util.Objects;
@@ -13,19 +13,21 @@ public class ConfigServiceTests {
 
     @Test
     void loadingEmptyConfigShouldReturnNull() {
-        ConfigService service = new ConfigService(Path.of("C:/")); // Path is irrelevant
+        ApplicationEventPublisher publisher = event -> {};
+        ConfigService service = new ConfigService(Path.of("C:/"), publisher); // Path is irrelevant
 
-        assertEquals(null, service.getConfig());
+        assertNull(service.getConfig());
     }
 
     @Test
     void validConfigIsLoaded() throws Exception {
-        ConfigService service = new ConfigService(configPath("valid.yaml"));
+        ApplicationEventPublisher publisher = event -> {};
+        ConfigService service = new ConfigService(configPath("valid.yaml"), publisher);
 
         // Ensure activeConfig is null before any config is loaded
-        assertEquals(null, service.getConfig());
+        assertNull(service.getConfig());
 
-        service.load(true);
+        service.load(true, false);
 
         MockraConfig config = service.getConfig();
         assertNotNull(config);
@@ -34,82 +36,91 @@ public class ConfigServiceTests {
 
     @Test
     void invalidatesNullHttpMethod() throws Exception {
-        ConfigService service = new ConfigService(configPath("invalid-null-method.yaml"));
+        ApplicationEventPublisher publisher = event -> {};
+        ConfigService service = new ConfigService(configPath("invalid-null-method.yaml"), publisher);
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
     @Test
     void invalidatesBlankId() throws Exception {
-        ConfigService service = new ConfigService(configPath("invalid-blank-id.yaml"));
+        ApplicationEventPublisher publisher = event -> {};
+        ConfigService service = new ConfigService(configPath("invalid-blank-id.yaml"), publisher);
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
     @Test
     void invalidatesEmptyResponses() throws Exception {
-        ConfigService service = new ConfigService(configPath("invalid-empty-responses.yaml"));
+        ApplicationEventPublisher publisher = event -> {};
+        ConfigService service = new ConfigService(configPath("invalid-empty-responses.yaml"), publisher);
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
     @Test
     void invalidatesPortUnderMin() throws Exception {
-        ConfigService service = new ConfigService(configPath("invalid-min-port.yaml"));
+        ApplicationEventPublisher publisher = event -> {};
+        ConfigService service = new ConfigService(configPath("invalid-min-port.yaml"), publisher);
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
     @Test
     void invalidatesPortOverMax() throws Exception {
-        ConfigService service = new ConfigService(configPath("invalid-max-port.yaml"));
+        ApplicationEventPublisher publisher = event -> {};
+        ConfigService service = new ConfigService(configPath("invalid-max-port.yaml"), publisher);
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
     @Test
     void invalidatesHotReloadPath() throws Exception {
-        ConfigService service = new ConfigService(configPath("invalid-hot-reload.yaml"));
+        ApplicationEventPublisher publisher = event -> {};
+        ConfigService service = new ConfigService(configPath("invalid-hot-reload.yaml"), publisher);
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
     @Test
     void invalidatesPathThatIsInGeneralReservedSpace() throws Exception {
-        ConfigService service = new ConfigService(configPath("invalid-start-hot-reload-path.yaml"));
+        ApplicationEventPublisher publisher = event -> {};
+        ConfigService service = new ConfigService(configPath("invalid-start-hot-reload-path.yaml"), publisher);
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
     @Test
     void invalidatesRequestBodyForGET() throws Exception {
-        ConfigService service = new ConfigService(configPath("invalid-body-get.yaml"));
+        ApplicationEventPublisher publisher = event -> {};
+        ConfigService service = new ConfigService(configPath("invalid-body-get.yaml"), publisher);
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
     @Test
     void invalidatesRequestBodyForPOST() throws Exception {
-        ConfigService service = new ConfigService(configPath("invalid-body-post.yaml"));
+        ApplicationEventPublisher publisher = event -> {};
+        ConfigService service = new ConfigService(configPath("invalid-body-post.yaml"), publisher);
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 

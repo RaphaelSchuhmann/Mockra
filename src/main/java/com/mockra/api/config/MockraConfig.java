@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+
+import com.mockra.api.model.FieldType;
 import com.mockra.api.model.HttpMethod;
 import com.mockra.api.config.MockraConfig.EndpointConfig.ValidRequestBody;
 import com.mockra.api.config.MockraConfig.EndpointConfig.NoHotReloadPath;
@@ -59,7 +61,7 @@ public class MockraConfig {
         @NotBlank(message = "Path is required")
         public String path;
 
-        public List<String> request = new ArrayList<>(); // Only needed when HttpMethod expects a body e.g. POST
+        public Map<String, FieldType> request = new HashMap<>(); // Only needed when HttpMethod expects a body e.g. POST
 
         @NotEmpty(message = "Each endpoint must have at least one variant / response")
         @Valid
