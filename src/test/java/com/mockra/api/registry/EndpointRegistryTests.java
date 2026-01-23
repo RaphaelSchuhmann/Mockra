@@ -23,6 +23,8 @@ public class EndpointRegistryTests {
         EndpointRegistry registry = new EndpointRegistry();
         registry.rebuildRegistry(service.getConfig());
 
+        var getEndpoint = registry.getEndpoint("/api/get");
+        assertNotNull(getEndpoint);
         assertEquals("get", registry.getEndpoint("/api/get").getId());
         assertEquals(1, registry.size());
     }
@@ -37,6 +39,8 @@ public class EndpointRegistryTests {
         EndpointRegistry registry = new EndpointRegistry();
         registry.rebuildRegistry(service.getConfig());
 
+        var putEndpoint = registry.getEndpoint("/api/put");
+        assertNotNull(putEndpoint);
         assertEquals("put", registry.getEndpoint("/api/put").getId());
         assertEquals(3, registry.size());
     }

@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 public class Endpoint {
     private final String id;
@@ -29,9 +28,9 @@ public class Endpoint {
     public String getPath() { return path; }
 
     public Map<String, FieldType> getBody() { return Collections.unmodifiableMap(requestBody); }
-    public void setBody(Map<String, FieldType> body) { this.requestBody = body; }
+    public void setBody(Map<String, FieldType> body) { this.requestBody = new HashMap<>(body); }
 
-    public void setVariants(List<EndpointVariant> responses) { this.responses = responses;  }
+    public void setVariants(List<EndpointVariant> responses) { this.responses = new ArrayList<>(responses);  }
     public void addVariant(EndpointVariant variant) { 
         boolean exists = responses.stream().anyMatch(v -> v.getVariant().equals(variant.getVariant()));
 

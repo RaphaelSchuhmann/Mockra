@@ -20,7 +20,7 @@ import com.mockra.api.model.*;
 @Component
 public class EndpointRegistry {
 
-    private final Map<String, Endpoint> endpoints = new HashMap<>();
+    private volatile Map<String, Endpoint> endpoints = Map.of();
 
     @EventListener
     public void onConfigLoaded(ConfigLoadedEvent event) {
@@ -28,15 +28,16 @@ public class EndpointRegistry {
     }
 
     public synchronized void rebuildRegistry(MockraConfig config) {
-        endpoints.clear();
+        Map<String, Endpoint> next = new HashMap<>();
 
         List<MockraConfig.EndpointConfig> cfgEndpoints = config.getEndpoints();
         List<Endpoint> rtEndpoints = convertToRuntimeEndpoints(cfgEndpoints);
 
         for (Endpoint endpoint : rtEndpoints) {
-            endpoints.put(endpoint.getPath(), endpoint);
+            next.put(endpoint.getPath(), endpoint);
         }
-        
+        endpoints = Map.copyOf(next);
+
         displayMessage("Endpoint registry rebuilt (" + endpoints.size() + " endpoints)", ErrorType.INFO);
     }
 
@@ -52,7 +53,7 @@ public class EndpointRegistry {
             for (MockraConfig.VariantConfig variantCfg : cfg.getResponses()) {
                 ResponseDef response = new ResponseDef(variantCfg.getStatus());
                 
-                if (!variantCfg.getBody().isEmpty()) {
+                if (variantCfg.getBody() != null && !variantCfg.getBody().isEmpty()) {
                     response.setBody(variantCfg.getBody());
                 }
 
