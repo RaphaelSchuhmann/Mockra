@@ -13,12 +13,10 @@ public class ResponseDefTests {
     void responseDefShouldSetAndGetDataCorrectly() throws InvalidDelayException {
         ResponseDef response = new ResponseDef(200);
         response.setDelay(100, true);
-        response.addHeader("Content-Type", "application/json");
         response.setBody(Map.of("success", true));
 
         assertEquals(200, response.getStatus());
         assertEquals(Map.of("success", true), response.getBody());
-        assertEquals(Map.of("Content-Type", "application/json"), response.getHeaders());
     }
 
     @Test

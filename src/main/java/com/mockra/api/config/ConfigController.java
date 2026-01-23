@@ -20,7 +20,7 @@ public class ConfigController {
     @PostMapping("/admin/config/reload")
     public ResponseEntity<String> hotReloadConfig() {
         try {
-            configService.load(false);
+            configService.load(false, true);
 
             displayMessage("Config reloaded successfully!", ErrorType.INFO);
             return ResponseEntity.ok("Config reloaded successfully!");

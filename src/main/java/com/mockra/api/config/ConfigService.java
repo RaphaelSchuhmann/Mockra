@@ -23,23 +23,23 @@ public class ConfigService {
 
     public MockraConfig getConfig() { return activeConfig.get(); }
 
-    public void load(boolean throwOnInvalid) throws IOException, IllegalConfigException {
+    public void load(boolean throwOnInvalid, boolean hotReload) throws IOException, IllegalConfigException {
         try {
             MockraConfig newConfig = ConfigLoader.loadAndValidate(configPath);
-            activeConfig.getAndSet(newConfig);
+            if (newConfig != null) activeConfig.set(newConfig);
         } catch (IOException e) {
             if (throwOnInvalid) {
                 throw e;
             } else {
                 displayMessage(
                         "Error reading config:\n\tThere was an error while loading the config.yaml.\n\tPlease ensure that the config exists and is named config.yaml.",
-                        ErrorType.FATAL);
+                        hotReload ? ErrorType.ERROR : ErrorType.FATAL);
             }
         } catch (Exception e) {
             if (throwOnInvalid) {
                 throw e;
             } else {
-                displayMessage(e.getMessage(), ErrorType.FATAL);
+                displayMessage(e.getMessage(), hotReload ? ErrorType.ERROR : ErrorType.FATAL);
             }
         } 
     }

@@ -3,6 +3,7 @@ package com.mockra.api.config;
 import org.junit.jupiter.api.Test;
 
 import com.mockra.api.errorHandling.ConfigExceptions.IllegalConfigException;
+import com.mockra.api.registry.EndpointRegistry;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -25,7 +26,7 @@ public class ConfigServiceTests {
         // Ensure activeConfig is null before any config is loaded
         assertEquals(null, service.getConfig());
 
-        service.load(true);
+        service.load(true, false);
 
         MockraConfig config = service.getConfig();
         assertNotNull(config);
@@ -37,7 +38,7 @@ public class ConfigServiceTests {
         ConfigService service = new ConfigService(configPath("invalid-null-method.yaml"));
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
@@ -46,7 +47,7 @@ public class ConfigServiceTests {
         ConfigService service = new ConfigService(configPath("invalid-blank-id.yaml"));
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
@@ -55,7 +56,7 @@ public class ConfigServiceTests {
         ConfigService service = new ConfigService(configPath("invalid-empty-responses.yaml"));
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
@@ -64,7 +65,7 @@ public class ConfigServiceTests {
         ConfigService service = new ConfigService(configPath("invalid-min-port.yaml"));
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
@@ -73,7 +74,7 @@ public class ConfigServiceTests {
         ConfigService service = new ConfigService(configPath("invalid-max-port.yaml"));
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
@@ -82,7 +83,7 @@ public class ConfigServiceTests {
         ConfigService service = new ConfigService(configPath("invalid-hot-reload.yaml"));
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
@@ -91,7 +92,7 @@ public class ConfigServiceTests {
         ConfigService service = new ConfigService(configPath("invalid-start-hot-reload-path.yaml"));
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
@@ -100,7 +101,7 @@ public class ConfigServiceTests {
         ConfigService service = new ConfigService(configPath("invalid-body-get.yaml"));
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
@@ -109,7 +110,7 @@ public class ConfigServiceTests {
         ConfigService service = new ConfigService(configPath("invalid-body-post.yaml"));
 
         assertThrows(IllegalConfigException.class, () -> {
-            service.load(true);
+            service.load(true, false);
         });
     }
 
