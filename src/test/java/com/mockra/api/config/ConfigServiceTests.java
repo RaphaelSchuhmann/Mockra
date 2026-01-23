@@ -1,12 +1,10 @@
 package com.mockra.api.config;
 
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import org.springframework.context.ApplicationEventPublisher;
 
 import com.mockra.api.errorHandling.ConfigExceptions.IllegalConfigException;
-import com.mockra.api.registry.EndpointRegistry;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.file.Path;
 import java.util.Objects;
@@ -18,7 +16,7 @@ public class ConfigServiceTests {
         ApplicationEventPublisher publisher = event -> {};
         ConfigService service = new ConfigService(Path.of("C:/"), publisher); // Path is irrelevant
 
-        assertEquals(null, service.getConfig());
+        assertNull(service.getConfig());
     }
 
     @Test
@@ -27,7 +25,7 @@ public class ConfigServiceTests {
         ConfigService service = new ConfigService(configPath("valid.yaml"), publisher);
 
         // Ensure activeConfig is null before any config is loaded
-        assertEquals(null, service.getConfig());
+        assertNull(service.getConfig());
 
         service.load(true, false);
 

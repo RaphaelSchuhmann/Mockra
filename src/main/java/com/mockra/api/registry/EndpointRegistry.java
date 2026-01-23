@@ -11,7 +11,6 @@ import java.util.HashMap;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import com.mockra.api.config.ConfigService;
 import com.mockra.api.config.MockraConfig;
 import com.mockra.api.errorHandling.ErrorType;
 import com.mockra.api.errorHandling.ValidationExceptions.InvalidDelayException;
@@ -48,14 +47,12 @@ public class EndpointRegistry {
             Endpoint rtEndpoint = new Endpoint(cfg.getId(), cfg.getPath(), cfg.getMethod());
             List<EndpointVariant> variants = new ArrayList<>();
 
-            if (cfg.getRequest().size() > 0) {
-                rtEndpoint.setBody(cfg.getRequest());
-            }
+            rtEndpoint.setBody(cfg.getRequest());
 
             for (MockraConfig.VariantConfig variantCfg : cfg.getResponses()) {
                 ResponseDef response = new ResponseDef(variantCfg.getStatus());
                 
-                if (variantCfg.getBody().size() > 0) {
+                if (!variantCfg.getBody().isEmpty()) {
                     response.setBody(variantCfg.getBody());
                 }
 
@@ -75,6 +72,14 @@ public class EndpointRegistry {
         }
 
         return result;
+    }
+
+    public Endpoint getEndpoint(String path) {
+        return endpoints.get(path);
+    }
+
+    public int size() {
+        return endpoints.size();
     }
 
     // TODO: Implement endpoint resolver which takes in a RequestContext and returns an Endpoint
