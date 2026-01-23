@@ -3,6 +3,9 @@ package com.mockra.api.model;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 class EndpointTests {
     
     @Test
@@ -18,7 +21,9 @@ class EndpointTests {
         assertTrue(endpoint.getVariants().isEmpty(), "Variants list should be empty initially");
 
         EndpointVariant variant = new EndpointVariant("success", new ResponseDef(200));
-        endpoint.addVariant(variant);
+        List<EndpointVariant> variants = new ArrayList<>();
+        variants.add(variant);
+        endpoint.setVariants(variants);
 
         assertEquals(1, endpoint.getVariants().size(), "Variants list should contain 1 variant");
         assertSame(variant, endpoint.getVariants().get(0), "Stored variant should match the added variant");
