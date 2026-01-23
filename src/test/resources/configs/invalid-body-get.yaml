@@ -6,8 +6,8 @@ endpoints:
     method: GET
     path: /api/get
     request:
-      - username
-      - password
+      username: STRING
+      password: STRING
     responses:
       - variant: success
         status: 200
