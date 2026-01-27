@@ -1,15 +1,14 @@
 package com.mockra.api.registry;
 
 import com.mockra.api.config.ConfigService;
-import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationEventPublisher;
 
-import com.mockra.api.config.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.nio.file.Path;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 public class EndpointRegistryTests {
 
