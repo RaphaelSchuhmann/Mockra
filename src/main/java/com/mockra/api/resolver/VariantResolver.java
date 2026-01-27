@@ -11,6 +11,8 @@ import com.mockra.api.model.EndpointVariant;
 
 public class VariantResolver {
     
+    private VariantResolver() {}
+
     public static Result<EndpointVariant, VariantResolverError> resolve(Endpoint endpoint, RequestContext ctx) {
         Optional<String> headerOpt = ctx.headers("X-Mockra-Variant");
 
