@@ -22,6 +22,6 @@ public record RequestContext(HttpMethod method, String path, Map<String, String>
 
     public Optional<String> headers(String name) {
         if (name == null) return Optional.empty();
-        return Optional.ofNullable(headers.get(name.toLowerCase()));
+        return Optional.ofNullable(headers.get(name.toLowerCase(Locale.ROOT)));
     }
 }
