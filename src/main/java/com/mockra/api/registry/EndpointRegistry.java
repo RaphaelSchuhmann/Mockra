@@ -84,6 +84,4 @@ public class EndpointRegistry {
     public int size() {
         return endpoints.size();
     }
-
-    // TODO: Implement endpoint resolver which takes in a RequestContext and returns an Endpoint
 }

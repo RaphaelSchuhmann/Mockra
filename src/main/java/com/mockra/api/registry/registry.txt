@@ -1,6 +1,0 @@
-Responsibility: Storage & lookup
-Contains:
-- in-memory structures
-- indexing logic
-- uniqueness guarantees
-No HTTP logic here.
