@@ -9,7 +9,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
-import org.yaml.snakeyaml.parser.ParserException;
 
 import com.mockra.api.errorHandling.ConfigExceptions.IllegalConfigException;
 import com.mockra.api.events.ConfigLoadedEvent;
