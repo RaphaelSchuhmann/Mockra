@@ -1,5 +1,0 @@
-Responsibility: Spring MVC integration
-Contains:
-- exactly one controller
-- /** mapping
-- minimal logic
