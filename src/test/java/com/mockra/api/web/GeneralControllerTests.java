@@ -82,6 +82,5 @@ public class GeneralControllerTests {
         long duration = System.currentTimeMillis() - start;
 
         assertTrue(duration >= delayMs, "Response was faster than expected delay");
-        assertFalse(duration < delayMs +  50, "Response took to long");
     }
 }

@@ -44,16 +44,14 @@ public class GeneralController {
         String reqMethod = request.getMethod();
         String reqPath = request.getRequestURI();
 
-        HttpMethod method = HttpMethod.GET;
-
-        switch (reqMethod) {
+        HttpMethod method = switch (reqMethod) {
             case "GET" -> method = HttpMethod.GET;
             case "POST" -> method = HttpMethod.POST;
             case "PUT" -> method = HttpMethod.PUT;
             case "PATCH" -> method = HttpMethod.PATCH;
             case "DELETE" -> method = HttpMethod.DELETE;
             default -> method = HttpMethod.INVALID;
-        }
+        };
 
         if (method == HttpMethod.INVALID) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mockra: invalid request, method '" + reqMethod + "' is not allowed.");
@@ -86,7 +84,9 @@ public class GeneralController {
         if (response.getDelay() > 0) {
             try {
                 Thread.sleep(response.getDelay());
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
         }
 
         return builder.body(response.getBody());
