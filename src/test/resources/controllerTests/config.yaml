@@ -1,0 +1,52 @@
+server:
+  port: 8089
+
+endpoints:
+  - id: login
+    method: POST
+    path: /api/login
+    request:
+      username: STRING
+      password: STRING
+    responses:
+      - variant: success
+        status: 200
+        body:
+          token: "abc123"
+
+      - variant: invalid-credentials
+        status: 401
+        body:
+          error: "Invalid credentials"
+        delayMs: 100
+
+      - variant: server-error
+        status: 500
+        body:
+          error: "Internal error"
+  - id: user
+    method: GET
+    path: /api/user
+    responses:
+      - variant: success
+        status: 200
+        body:
+          username: "Random Name"
+
+      - variant: invalid-credentials
+        status: 401
+        body:
+          error: "Invalid credentials"
+        delayMs: 100
+
+      - variant: server-error
+        status: 500
+        body:
+          error: "Internal error"
+  - id: delayTest
+    method: GET
+    path: /api/delayTest
+    responses:
+      - variant: success
+        status: 200
+        delayMs: 100
