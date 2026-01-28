@@ -3,7 +3,6 @@ package com.mockra.api.config;
 import static com.mockra.api.errorHandling.ErrorHandler.displayMessage;
 import com.mockra.api.errorHandling.ErrorType;
 import com.mockra.api.config.MockraConfig.EndpointConfig;
-import com.mockra.api.errorHandling.ConfigExceptions;
 import com.mockra.api.errorHandling.ConfigExceptions.IllegalConfigException;
 
 import java.io.IOException;
