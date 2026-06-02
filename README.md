@@ -105,10 +105,6 @@ endpoints:
         delayMs: 100
 
 ```
-## Authors
-
-- [@RaphaelSchuhmann](https://www.github.com/RaphaelSchuhmann)
-
 
 ## License
 
