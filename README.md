@@ -44,7 +44,7 @@ endpoints:
 
 ### Server Configuration
 `port` (integer, required) - TCP port Mockra listens on.
-- Missing or invalid port -> startup failure.
+- Missing or invalid port causes a startup failure.
 
 ### Endpoint Configuration
 Each endpoint defines a unique API route:
